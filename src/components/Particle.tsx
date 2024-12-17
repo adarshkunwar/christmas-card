@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const Particle = ({
   x,
@@ -10,12 +10,13 @@ const Particle = ({
   onRemove: () => void;
 }) => {
   const [val, setVal] = useState({ x, y });
+  const randomSize = useMemo(() => Math.floor(Math.random() * 5) + 1, []); // Random size between 1 and 5
 
   useEffect(() => {
     const interval = setInterval(() => {
       setVal((prev) => {
         const randomX = Math.floor(Math.random() * 3) - 1; // Slight horizontal drift
-        const newY = prev.y + 5; // Slow vertical movement
+        const newY = prev.y + 5;
 
         // Remove the particle when it goes off-screen
         if (newY > window.innerHeight) {
@@ -31,9 +32,11 @@ const Particle = ({
 
   return (
     <div
-      className="absolute w-2 h-2 bg-white rounded-full"
+      className="absolute bg-white rounded-full"
       style={{
         top: val.y,
+        height: randomSize,
+        width: randomSize,
         left: val.x,
         boxShadow: "0 0 5px 2px rgba(255, 255, 255, 0.8)",
         transition: "top 0.05s linear, left 0.05s linear",
