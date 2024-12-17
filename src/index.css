@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind utilities;
 @tailwind variants;
+
+/* Add this CSS in your styles */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -49%); /* Adjust the bounce height */
+  }
+}

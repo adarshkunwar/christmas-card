@@ -3,7 +3,7 @@ import Main from "./pages/Main";
 
 function App() {
   return (
-    <div className="relative w-screen h-screen">
+    <div className="relative h-screen w-screen">
       <Main />
       <Background />
     </div>

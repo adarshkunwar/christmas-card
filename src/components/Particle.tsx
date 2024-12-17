@@ -32,7 +32,7 @@ const Particle = ({
 
   return (
     <div
-      className="absolute bg-white rounded-full"
+      className="absolute rounded-full bg-white"
       style={{
         top: val.y,
         height: randomSize,
