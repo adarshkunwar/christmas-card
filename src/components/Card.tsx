@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useMemo } from "react";
 
 const Card = () => {
-  const [position, setPosition] = useState({
-    x: "50%",
-    y: "50%",
-  });
+  const position = useMemo(() => {
+    return {
+      x: "50%",
+      y: "50%",
+    };
+  }, []);
+
   return (
     <div
       className="absolute h-[75vh] w-[500px] -translate-x-1/2 -translate-y-1/2 border border-yellow-50 rounded-2xl overflow-hidden"
       style={{
         left: position.x,
         top: position.y,
+        animation: "bounce 1s infinite",
       }}
     >
       <div className="relative h-full w-full">
@@ -21,7 +25,9 @@ const Card = () => {
         <div className="absolute bottom-0 left-0 top-0 w-4 bg-red-50 rounded-l-2xl"></div>
 
         {/* card name */}
-        <div className="absolute bottom-0 right-1/4 left-1/4 h-20 bg-red-50 rounded-b-2xl"></div>
+        <div className="absolute bottom-0 right-1/4 left-1/4 h-20 bg-red-50 rounded-b-2xl text-4xl pt-3 rounded-lg">
+          <div className="flex justify-center">Card Name</div>
+        </div>
       </div>
     </div>
   );
