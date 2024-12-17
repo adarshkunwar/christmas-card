@@ -1,9 +1,11 @@
+import Background from "./components/Background";
 import Main from "./pages/Main";
 
 function App() {
   return (
-    <div className="bg-red-300 w-screen h-screen">
+    <div className="relative w-screen h-screen">
       <Main />
+      <Background />
     </div>
   );
 }
