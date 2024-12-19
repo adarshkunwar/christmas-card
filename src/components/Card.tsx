@@ -1,16 +1,20 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 
-const Card = () => {
-  const position = useMemo(() => {
-    return {
-      x: "50%",
-      y: "50%",
-    };
-  }, []);
+const Card = ({ cardStage }: { cardStage: number }) => {
+  const [position, setPosition] = useState({
+    x: "50%",
+    y: "50%",
+  });
+
+  useEffect(() => {
+    if (cardStage == 2) setPosition({ x: "25%", y: "50%" });
+  }, [cardStage]);
+
+  console.log(cardStage);
 
   return (
     <div
-      className="absolute h-[75vh] w-[500px] -translate-x-1/2 -translate-y-1/2 border border-yellow-50 rounded-2xl overflow-hidden"
+      className="absolute h-[75vh] w-[500px] -translate-x-1/2 -translate-y-1/2 border border-yellow-50 rounded-2xl overflow-hidden transform-all duration-1000"
       style={{
         left: position.x,
         top: position.y,
