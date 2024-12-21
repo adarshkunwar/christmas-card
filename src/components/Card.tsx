@@ -12,6 +12,7 @@ const Card = ({ cardStage }: { cardStage: number }) => {
 
   useEffect(() => {
     if (cardStage == 2) setPosition({ x: "25%", y: "50%" });
+    if (cardStage == 3) setPosition({ x: "75%", y: "50%" });
   }, [cardStage]);
 
   console.log(cardStage);

@@ -9,7 +9,7 @@ import { setCardName } from "../store/card/cardSlice";
 
 const Main = () => {
   const [cardStage, setCardStage] = useState(1);
-  const { cardImage, cardName } = useSelector((state: RootState) => state.card);
+  const { cardImage } = useSelector((state: RootState) => state.card);
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
@@ -25,12 +25,18 @@ const Main = () => {
 
       {/* body */}
       {cardStage === 3 && (
-        <div className="absolute left-1/3 top-1/4 translate-x-1/2 w-[36rem] duration-200  flex flex-col gap-20 ">
-          <h2 className={`text-7xl text-white `}>Name your card</h2>
-          <input
-            type="text"
-            onChange={(e) => dispatch(setCardName(e.target.value))}
-          />
+        <div className="absolute left-1/3 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] flex flex-col items-center gap-8 bg-black/20 backdrop-blur-lg p-12 rounded-2xl shadow-2xl">
+          <h2 className="text-5xl font-bold text-white text-center bg-gradient-to-r from-white to-white/70 bg-clip-text">
+            Name your card
+          </h2>
+          <div className="w-full">
+            <input
+              type="text"
+              onChange={(e) => dispatch(setCardName(e.target.value))}
+              placeholder="Enter card name..."
+              className="w-full px-4 py-3 text-lg text-white bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:border-white/40 placeholder-white/50 transition-all duration-200"
+            />
+          </div>
         </div>
       )}
       <Card cardStage={cardStage} />
