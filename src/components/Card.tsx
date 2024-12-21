@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
 const Card = ({ cardStage }: { cardStage: number }) => {
-  const { cardImage } = useSelector((state: RootState) => state.card);
-
-  console.log(cardImage);
+  const { cardImage, cardName } = useSelector((state: RootState) => state.card);
 
   const [position, setPosition] = useState({
     x: "50%",
@@ -43,7 +41,7 @@ const Card = ({ cardStage }: { cardStage: number }) => {
         )}
         {/* card name */}
         <div className="absolute bottom-0 right-1/4 left-1/4 h-20 bg-red-50 rounded-b-2xl text-4xl pt-3 rounded-lg">
-          <div className="flex justify-center">Card Name</div>
+          <div className="flex justify-center">{cardName ?? "Card Name"}</div>
         </div>
       </div>
     </div>
