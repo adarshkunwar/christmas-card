@@ -61,12 +61,14 @@ const Figure = () => {
       >
         {src ? (
           // Image Preview
-          <div className="relative">
-            <img
-              src={src}
-              alt={"Uploaded image"}
-              className="h-auto w-full rounded-md shadow-sm"
-            />
+          <div className="relative w-full h-96">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <img
+                src={src}
+                alt="Uploaded image"
+                className="max-w-full max-h-full w-auto h-auto rounded-md shadow-sm object-contain"
+              />
+            </div>
             <button
               onClick={removeFigure}
               className="absolute right-2 top-2 rounded-full bg-white p-1.5 shadow-md transition-colors duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"

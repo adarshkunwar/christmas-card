@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const Card = ({ cardStage }: { cardStage: number }) => {
+  const cardImage = useSelector((state: RootState) => state.card.cardImage);
+
+  console.log(cardImage);
+
   const [position, setPosition] = useState({
     x: "50%",
     y: "50%",
@@ -28,6 +34,13 @@ const Card = ({ cardStage }: { cardStage: number }) => {
         <div className="absolute bottom-0 right-0 top-0 w-4 bg-red-50 rounded-r-2xl"></div>
         <div className="absolute bottom-0 left-0 top-0 w-4 bg-red-50 rounded-l-2xl"></div>
 
+        {cardImage && (
+          <img
+            src={cardImage}
+            alt="card"
+            className="h-full w-full object-cover"
+          />
+        )}
         {/* card name */}
         <div className="absolute bottom-0 right-1/4 left-1/4 h-20 bg-red-50 rounded-b-2xl text-4xl pt-3 rounded-lg">
           <div className="flex justify-center">Card Name</div>
