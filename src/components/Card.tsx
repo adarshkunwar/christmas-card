@@ -46,7 +46,7 @@ const Card = ({ cardStage }: { cardStage: number }) => {
             )}
             {/* card name */}
             <div className="absolute bottom-0 right-1/4 left-1/4 h-20 bg-red-50 rounded-b-2xl text-3xl pt-5 rounded-lg">
-              <div className="flex justify-center">
+              <div className="flex justify-center pacifico-regular">
                 {cardName ? cardName : "Card Name"}
               </div>
             </div>
