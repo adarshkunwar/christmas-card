@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
 const Card = ({ cardStage }: { cardStage: number }) => {
-  const cardImage = useSelector((state: RootState) => state.card.cardImage);
+  const { cardImage } = useSelector((state: RootState) => state.card);
 
   console.log(cardImage);
 
