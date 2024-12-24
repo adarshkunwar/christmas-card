@@ -25,6 +25,17 @@ export const decodeBase64ToCard = (base64String: string): CardState => {
   return JSON.parse(atob(base64String)) as CardState;
 };
 
+export const fileToBase64 = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      resolve(base64String.split(",")[1]); // Remove metadata prefix
+    };
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(file);
+  });
+
 export const cardSlice = createSlice({
   initialState,
   name: "card",
@@ -49,6 +60,11 @@ export const cardSlice = createSlice({
       state.cardDescription = decodedCard.cardDescription;
       state.cardStamp = decodedCard.cardStamp;
     },
+    setCardImageFromFile: (state, action: PayloadAction<File>) => {
+      fileToBase64(action.payload).then((base64Image) => {
+        state.cardImage = base64Image;
+      });
+    },
   },
 });
 
@@ -58,6 +74,8 @@ export const {
   setCardName,
   setCardStamp,
   loadCardFromBase64,
+
+  setCardImageFromFile,
 } = cardSlice.actions;
 
 export default cardSlice.reducer;

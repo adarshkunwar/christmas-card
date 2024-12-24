@@ -1,32 +1,32 @@
-import { useEffect, useState } from "react";
 import { ImagePlus, X } from "lucide-react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fileToBase64, setCardImage } from "../store/card/cardSlice";
 import { RootState } from "../store/store";
-import { setCardImage } from "../store/card/cardSlice";
 
 const Figure = () => {
-  const [src, setSrc] = useState<string>();
   const [isDragging, setIsDragging] = useState(false);
   const cardImage = useSelector((state: RootState) => state.card.cardImage);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const handleImageUpdate = () => {
-      if (src && src !== cardImage) {
-        dispatch(setCardImage(src));
+  const handleFileUpload = async (file: File) => {
+    if (file && file.type.startsWith("image/")) {
+      try {
+        const base64Image = await fileToBase64(file);
+        dispatch(setCardImage(base64Image)); // Update cardImage in Redux
+      } catch (error) {
+        console.error("Failed to convert file to Base64", error);
       }
-    };
-    const delayDebounce = setTimeout(handleImageUpdate, 300);
-    return () => clearTimeout(delayDebounce);
-  }, [src, cardImage, dispatch]);
+    }
+  };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
 
     const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) {
-      setSrc(URL.createObjectURL(file));
+    if (file) {
+      handleFileUpload(file);
     }
   };
 
@@ -40,8 +40,7 @@ const Figure = () => {
   };
 
   const removeFigure = () => {
-    setSrc("");
-    dispatch(setCardImage(""));
+    dispatch(setCardImage("")); // Clear cardImage in Redux
   };
 
   return (
@@ -51,7 +50,7 @@ const Figure = () => {
         className={`relative rounded-lg border-2 border-dashed p-6 transition-colors duration-200 ${
           isDragging
             ? "border-blue-500 bg-blue-50"
-            : src
+            : cardImage
               ? "border-gray-200 bg-gray-50"
               : "border-gray-300 bg-white hover:border-gray-400"
         }`}
@@ -59,12 +58,12 @@ const Figure = () => {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
       >
-        {src ? (
+        {cardImage ? (
           // Image Preview
           <div className="relative w-full h-96">
             <div className="absolute inset-0 flex items-center justify-center">
               <img
-                src={src}
+                src={`data:image/png;base64,${cardImage}`}
                 alt="Uploaded image"
                 className="max-w-full max-h-full w-auto h-auto rounded-md shadow-sm object-contain"
               />
@@ -94,7 +93,7 @@ const Figure = () => {
                       accept="image/*"
                       onChange={(e) =>
                         e.target.files?.[0] &&
-                        setSrc(URL.createObjectURL(e.target.files[0]))
+                        handleFileUpload(e.target.files[0])
                       }
                     />
                   </label>

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import {
-  encodeCardToBase64,
   loadCardFromBase64,
   setCardDescription,
 } from "../store/card/cardSlice";
@@ -16,13 +15,13 @@ const Card = ({ cardStage }: { cardStage: number }) => {
     y: "50%",
   });
 
-  const shareLink = `${window.location.origin}/#${encodeCardToBase64(card)}`;
+  // const shareLink = `${window.location.origin}/#${encodeCardToBase64(card)}`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareLink).then(() => {
-      alert("Link copied to clipboard!");
-    });
-  };
+  // const copyToClipboard = () => {
+  //   navigator.clipboard.writeText(shareLink).then(() => {
+  //     alert("Link copied to clipboard!");
+  //   });
+  // };
 
   useEffect(() => {
     if (cardStage == 2) setPosition({ x: "25%", y: "50%" });
@@ -64,7 +63,7 @@ const Card = ({ cardStage }: { cardStage: number }) => {
             <div className="absolute bottom-0 left-0 top-0 w-4 bg-red-50 rounded-l-2xl"></div>
             {cardImage && (
               <img
-                src={cardImage}
+                src={`data:image/png;base64,${cardImage}`} // Prepend the metadata
                 alt="card"
                 className="h-full w-full object-cover"
               />
@@ -113,12 +112,12 @@ const Card = ({ cardStage }: { cardStage: number }) => {
           </div>
         </div>
       </div>
-      <button
+      {/* <button
         className="bg-white mx-auto px-20 py-2 rounded-full"
         onClick={copyToClipboard}
       >
         download as image
-      </button>
+      </button> */}
     </div>
   );
 };

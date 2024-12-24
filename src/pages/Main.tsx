@@ -9,13 +9,30 @@ import { setCardName } from "../store/card/cardSlice";
 
 const Main = () => {
   const [cardStage, setCardStage] = useState(1);
-  const { cardImage } = useSelector((state: RootState) => state.card);
+  const card = useSelector((state: RootState) => state.card);
+  const { cardImage } = card;
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
     console.log("button was clicked");
     setCardStage((prev) => prev + 1);
   };
+
+  const downloadFileAsJSON = () => {
+    const jsonData = JSON.stringify(card, null, 2); // Serialize card object to JSON
+    const blob = new Blob([jsonData], { type: "application/json" }); // Create a Blob for the JSON
+    const url = URL.createObjectURL(blob); // Create an object URL for the Blob
+
+    // Create a temporary anchor element to trigger the download
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "card.json"; // Specify the download file name
+    link.click(); // Trigger the download
+
+    // Cleanup: Revoke the object URL after the download
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div>
       {/* header */}
@@ -57,7 +74,13 @@ const Main = () => {
         </div>
       ) : (
         <div className="absolute bottom-10 right-10">
-          <Button onClick={() => {}}>END</Button>
+          <Button
+            onClick={() => {
+              downloadFileAsJSON();
+            }}
+          >
+            END
+          </Button>
         </div>
       )}
     </div>
