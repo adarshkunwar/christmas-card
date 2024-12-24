@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Background from "./components/Background";
-import Main from "./pages/Main";
+import ChooseYourMode from "./components/choseYourMode";
 
 function App() {
   useEffect(() => {
@@ -9,7 +9,8 @@ function App() {
   }, []);
   return (
     <div className="relative h-screen w-screen overflow-clip">
-      <Main />
+      {/* <Main /> */}
+      <ChooseYourMode />
       <Background />
     </div>
   );
