@@ -8,6 +8,7 @@ import ShowCard from "./components/ShowCard";
 function App() {
   useEffect(() => {
     const audio = new Audio("/christmas-1.mp3");
+    audio.load();
     audio.play();
   }, []);
   return (
