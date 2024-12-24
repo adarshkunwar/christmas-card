@@ -1,6 +1,9 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Background from "./components/Background";
 import ChooseYourMode from "./components/choseYourMode";
+import Main from "./pages/Main";
+import ShowCard from "./components/ShowCard";
 
 function App() {
   useEffect(() => {
@@ -10,7 +13,13 @@ function App() {
   return (
     <div className="relative h-screen w-screen overflow-clip">
       {/* <Main /> */}
-      <ChooseYourMode />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ChooseYourMode />} />
+          <Route path="/create" element={<Main />} />
+          <Route path="/show" element={<ShowCard />} />
+        </Routes>
+      </BrowserRouter>
       <Background />
     </div>
   );
