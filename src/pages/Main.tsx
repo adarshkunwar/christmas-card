@@ -26,7 +26,7 @@ const Main = () => {
     // Create a temporary anchor element to trigger the download
     const link = document.createElement("a");
     link.href = url;
-    link.download = "card.json"; // Specify the download file name
+    link.download = "send-this.json"; // Specify the download file name
     link.click(); // Trigger the download
 
     // Cleanup: Revoke the object URL after the download
