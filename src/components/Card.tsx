@@ -8,7 +8,7 @@ import {
 
 const Card = ({ cardStage }: { cardStage: number }) => {
   const card = useSelector((state: RootState) => state.card);
-  const { cardImage, cardName } = card;
+  const { cardImage, cardName, cardDescription } = card;
   const dispatch = useDispatch();
   const [position, setPosition] = useState({
     x: "50%",
@@ -98,6 +98,7 @@ const Card = ({ cardStage }: { cardStage: number }) => {
                   Dear Friend,
                 </div>
                 <textarea
+                  value={cardDescription}
                   onChange={(e) => dispatch(setCardDescription(e.target.value))}
                   placeholder="Write your Christmas message here..."
                   className="pacifico-regular  flex-1 w-full bg-transparent border-none text-gray-700 placeholder-gray-400/50 focus:outline-none resize-none font-serif text-lg leading-relaxed"
