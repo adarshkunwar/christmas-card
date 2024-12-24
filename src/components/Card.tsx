@@ -15,14 +15,6 @@ const Card = ({ cardStage }: { cardStage: number }) => {
     y: "50%",
   });
 
-  // const shareLink = `${window.location.origin}/#${encodeCardToBase64(card)}`;
-
-  // const copyToClipboard = () => {
-  //   navigator.clipboard.writeText(shareLink).then(() => {
-  //     alert("Link copied to clipboard!");
-  //   });
-  // };
-
   useEffect(() => {
     if (cardStage == 2) setPosition({ x: "25%", y: "50%" });
     if (cardStage == 3) setPosition({ x: "75%", y: "50%" });
@@ -112,12 +104,6 @@ const Card = ({ cardStage }: { cardStage: number }) => {
           </div>
         </div>
       </div>
-      {/* <button
-        className="bg-white mx-auto px-20 py-2 rounded-full"
-        onClick={copyToClipboard}
-      >
-        download as image
-      </button> */}
     </div>
   );
 };
