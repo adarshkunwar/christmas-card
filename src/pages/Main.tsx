@@ -51,9 +51,15 @@ const Main = () => {
         </div>
       )}
       {/* footer */}
-      <div className="absolute bottom-10 right-10">
-        <Button onClick={handleButtonClick}>NEXT</Button>
-      </div>
+      {cardStage < 5 ? (
+        <div className="absolute bottom-10 right-10">
+          <Button onClick={handleButtonClick}>NEXT</Button>
+        </div>
+      ) : (
+        <div className="absolute bottom-10 right-10">
+          <Button onClick={() => {}}>END</Button>
+        </div>
+      )}
     </div>
   );
 };

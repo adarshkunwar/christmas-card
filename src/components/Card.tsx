@@ -1,21 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { setCardDescription } from "../store/card/cardSlice";
+import {
+  encodeCardToBase64,
+  loadCardFromBase64,
+  setCardDescription,
+} from "../store/card/cardSlice";
 
 const Card = ({ cardStage }: { cardStage: number }) => {
-  const { cardImage, cardName } = useSelector((state: RootState) => state.card);
+  const card = useSelector((state: RootState) => state.card);
+  const { cardImage, cardName } = card;
   const dispatch = useDispatch();
   const [position, setPosition] = useState({
     x: "50%",
     y: "50%",
   });
 
+  const shareLink = `${window.location.origin}/#${encodeCardToBase64(card)}`;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareLink).then(() => {
+      alert("Link copied to clipboard!");
+    });
+  };
+
   useEffect(() => {
     if (cardStage == 2) setPosition({ x: "25%", y: "50%" });
     if (cardStage == 3) setPosition({ x: "75%", y: "50%" });
     if (cardStage == 4) setPosition({ x: "50%", y: "50%" });
   }, [cardStage]);
+
+  useEffect(() => {
+    const hash = window.location.hash.substring(1); // Get Base64 from URL
+    if (hash) {
+      dispatch(loadCardFromBase64(hash));
+    }
+  }, [dispatch]);
+
+  const cardRef = useRef<HTMLDivElement>(null);
 
   return (
     <div
@@ -24,6 +46,7 @@ const Card = ({ cardStage }: { cardStage: number }) => {
         left: position.x,
         top: position.y,
       }}
+      ref={cardRef}
     >
       <div
         className="relative h-full w-full [transform-style:preserve-3d] transition-all duration-1000"
@@ -84,11 +107,18 @@ const Card = ({ cardStage }: { cardStage: number }) => {
                 <div className="text-red-600/80 text-xl font-serif italic self-end pr-8">
                   With love,
                 </div>
+                p-6
               </div>
             </div>
           </div>
         </div>
       </div>
+      <button
+        className="bg-white mx-auto px-20 py-2 rounded-full"
+        onClick={copyToClipboard}
+      >
+        download as image
+      </button>
     </div>
   );
 };
