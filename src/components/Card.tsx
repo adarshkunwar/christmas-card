@@ -14,11 +14,12 @@ const Card = ({ cardStage }: { cardStage: number }) => {
     x: "50%",
     y: "50%",
   });
+  const [isFlipped, setIsFlipped] = useState(false); // Track flipped state
 
   useEffect(() => {
-    if (cardStage == 2) setPosition({ x: "25%", y: "50%" });
-    if (cardStage == 3) setPosition({ x: "75%", y: "50%" });
-    if (cardStage == 4) setPosition({ x: "50%", y: "50%" });
+    if (cardStage === 2) setPosition({ x: "25%", y: "50%" });
+    if (cardStage === 3) setPosition({ x: "75%", y: "50%" });
+    if (cardStage === 4) setPosition({ x: "50%", y: "50%" });
   }, [cardStage]);
 
   useEffect(() => {
@@ -30,6 +31,12 @@ const Card = ({ cardStage }: { cardStage: number }) => {
 
   const cardRef = useRef<HTMLDivElement>(null);
 
+  const handleCardClick = () => {
+    if (cardStage === 5) {
+      setIsFlipped((prev) => !prev); // Toggle flipped state
+    }
+  };
+
   return (
     <div
       className="absolute [perspective:1000px] h-[75vh] w-[500px] -translate-x-1/2 -translate-y-1/2 duration-1000"
@@ -38,11 +45,17 @@ const Card = ({ cardStage }: { cardStage: number }) => {
         top: position.y,
       }}
       ref={cardRef}
+      onClick={handleCardClick} // Add click handler
     >
       <div
         className="relative h-full w-full [transform-style:preserve-3d] transition-all duration-1000"
         style={{
-          transform: cardStage === 4 ? "rotateY(180deg)" : "rotateY(0deg)",
+          transform:
+            cardStage === 4
+              ? "rotateY(180deg)"
+              : isFlipped
+                ? "rotateY(180deg)"
+                : "rotateY(0deg)", // Use flipped state
         }}
       >
         {/* Front face */}
